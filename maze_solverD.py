@@ -1,7 +1,5 @@
 import heapq
 
-
-
 # Directions for Up, Down, Left, Right
 DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # U, D, L, R
 
@@ -24,7 +22,6 @@ def dijkstra(grid):
                 start_x, start_y = c, r
                 dist[start_y][start_x] = 0  # Starting point has distance 0
                 heapq.heappush(pq, (0, start_x, start_y))  # Push the start into the priority queue
-                print(f"Start found at ({start_x}, {start_y})")  # Debugging line
                 break
     # End position
     end_x, end_y = None, None
@@ -32,7 +29,6 @@ def dijkstra(grid):
         for c in range(cols):
             if grid[r][c].getText() == 'E':  # Find the end
                 end_x, end_y = c, r
-                print(f"End found at ({end_x}, {end_y})")  # Debugging line
                 break
 
     # Ensure 'E' was found
@@ -49,7 +45,6 @@ def dijkstra(grid):
 
         # If we've reached the end, no need to process further
         if x == end_x and y == end_y:
-            print(f"Reached end at ({end_x}, {end_y}) with distance: {current_dist}")  # Debugging line
             break
 
         # Explore neighbors
@@ -63,12 +58,6 @@ def dijkstra(grid):
                     dist[ny][nx] = new_dist
                     prev[ny][nx] = (x, y)
                     heapq.heappush(pq, (new_dist, nx, ny))
-                    print(f"Updated dist[{ny}][{nx}] to {new_dist} from ({x}, {y})")  # Debugging line
-
-    # Debug: Print the distance grid
-    print("Final Distance Grid:")
-    for row in dist:
-        print(row)
 
     if dist[finalx][finaly] == 0:
         if dist[finaly][finalx] != 0:
@@ -78,7 +67,6 @@ def dijkstra(grid):
     
     # Reconstruct path by backtracking from the end
     path = []
-    print(f"Backtracking from end: ({end_x}, {end_y})")
     while prev[end_y][end_x] is not None:
         prev_x, prev_y = prev[end_y][end_x]
         if prev_x == end_x:
@@ -102,9 +90,4 @@ def dijkstra(grid):
     # If the end point is still infinity, no path exists
     if total_weight == float('inf'):
         path = []
-
-    
-
-    print(f"End found at ({finalx}, {finaly})")
-    print(f"Shortest path: {''.join(path)} with total weight: {total_weight}")  # Debugging line
     return ''.join(path), total_weight

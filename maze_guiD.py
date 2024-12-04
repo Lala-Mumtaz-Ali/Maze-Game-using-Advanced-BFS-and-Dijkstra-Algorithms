@@ -167,7 +167,7 @@ if __name__ == '__main__':
                         path, weight = dijkstra(GRID)
                         if STARTCOL is not None and STARTROW is not None:
                             paintPath(GRID, STARTCOL, STARTROW, path)
-                            print(f"Shortest path found with weight: {weight}")
+                            print(f"Shortest {path} found with weight: {weight}")
                             path_text = f"{path} (Weight: {weight})"
                         else:
                             print("Start point not set.")
